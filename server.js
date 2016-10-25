@@ -20,7 +20,8 @@ io.on('connection', function (socket) {
 	// timestamp property - JavaScript timestamp (ms)  ValueOf
 
 	socket.emit('message', {
-		text: 'Welcome to the chat application!',
+		name: 'Current Time: ',
+		text: 'This is a chat room.',
 		timestamp: moment().valueOf()
 	});
 });
