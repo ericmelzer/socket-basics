@@ -27,8 +27,8 @@ function sendCurrentUsers (socket) {
 	});
 
 	socket.emit('message', {
-		name: 'System',
-		text: 'Current users: ' + users.join(', '),
+		name: '[System Message]',
+		text: 'Currently here: ' + users.join(', '),
 		timestamp: moment().valueOf()
 	});
 }
@@ -42,7 +42,7 @@ io.on('connection', function (socket) {
 		if (typeof userData != 'undefined') {
 			socket.leave(userData.room);
 			io.to(userData.room).emit('message', {
-				name: 'System',
+				name: '[System Message]',
 				text: userData.name + ' has left the room.',
 				timestamp: moment().valueOf()
 			});
@@ -54,7 +54,7 @@ io.on('connection', function (socket) {
 		clientInfo[socket.id] = req;
 		socket.join(req.room);
 		socket.broadcast.to(req.room).emit('message', {
-			name: 'System',
+			name: '[System Message]',
 			text: req.name + ' has joined!',
 			timestamp: moment().valueOf()
 		});
@@ -63,7 +63,7 @@ io.on('connection', function (socket) {
 	socket.on('message', function (message) {
 		console.log('message received:' + message.text);
 
-		if (message.text === '@currentUsers') {
+		if (message.text === '@users') {
 			sendCurrentUsers(socket);
 		} else {
 			message.timestamp = moment().valueOf();
@@ -77,7 +77,7 @@ io.on('connection', function (socket) {
 
 	socket.emit('message', {
 		name: 'Current Time: ',
-		text: 'This is a chat room.',
+		text: 'Welcome to the chat experience.',
 		timestamp: moment().valueOf()
 	});
 });
